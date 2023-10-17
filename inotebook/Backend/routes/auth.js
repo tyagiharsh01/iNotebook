@@ -38,11 +38,11 @@ router.post('/createUser', [
         id: user.id
       }
     }
-    const authtoken = jwt.sign(data, JWT_SECRET);
+    const token = jwt.sign(data, JWT_SECRET);
 
 
     // res.json(user)
-    res.json({ authtoken })
+    res.json({ token })
 
   } catch (error) {
     console.error(error.message);
@@ -82,9 +82,9 @@ router.post('/login', [
         id: user.id
       }
     }
-    const authtoken = jwt.sign(data, JWT_SECRET);
+    const token = jwt.sign(data, JWT_SECRET);
     success = true;
-    res.json({ success, authtoken })
+    res.json({ success, token })
 
   } catch (error) {
     console.error(error.message);
