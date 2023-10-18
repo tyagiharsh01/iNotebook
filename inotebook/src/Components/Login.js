@@ -50,13 +50,14 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //http://localhost:5000/api/auth/login
 
     const emailErrors = validateEmail(cred.email);
     const passwordErrors = validatePassword(cred.password);
 
     if (emailErrors.length === 0 && passwordErrors.length === 0) {
       try {
-        const response = await fetch("http://localhost:5000/api/auth/login", {
+        const response = await fetch("http://backend:5000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
