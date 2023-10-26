@@ -50,14 +50,12 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //http://localhost:5000/api/auth/login
-
     const emailErrors = validateEmail(cred.email);
     const passwordErrors = validatePassword(cred.password);
 
     if (emailErrors.length === 0 && passwordErrors.length === 0) {
       try {
-        const response = await fetch("http://backend:5000/api/auth/login", {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +66,7 @@ const Login = (props) => {
         if (json.token !== null) {
           console.log(json);
           localStorage.setItem('token', json.token);
-       
+
           navigate('/');
           props.showAlert("Loggedin Successfully", "success")
         }
@@ -83,64 +81,54 @@ const Login = (props) => {
 
   return (
     <div className="mt-2">
-    <div className="card" style={{ width: '30rem', marginLeft: 'auto', marginRight: 'auto', padding: '20px' }}>
-      <div className="my-3">
-        <h3 className="text-center">iNotebook</h3>
+      <div className="card" style={{ width: '30rem', marginLeft: 'auto', marginRight: 'auto', padding: '20px' }}>
+        <div className="my-3">
+          <h3 className="text-center">iNotebook</h3>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={cred.email}
+              onChange={onchange}
+              aria-describedby="emailHelp"
+              placeholder="Enter your email"
+            />
+            {validation.email.map((error, index) => (
+              <div key={index} className="text-danger">
+                {error}
+              </div>
+            ))}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label"> Password </label>
+            <input  type="password"  className="form-control"  id="password"  value={cred.password} onChange={onchange} name="password" placeholder="Enter your password" />
+            {validation.password.map((error, index) => (
+              <div key={index} className="text-danger">
+                {error}
+              </div>
+            ))}
+          </div>
+
+          <div id="emailHelp" className="form-text text-center">
+            <button type="submit" className="btn btn-success">
+              Login
+            </button>
+            <p className="my-2">Don't have an account? Sign up here:</p>
+            <Link className="btn btn-success" to="/signup" role="button">
+              Signup
+            </Link>
+          </div>
+        </form>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={cred.email}
-            onChange={onchange}
-            aria-describedby="emailHelp"
-            placeholder="Enter your email"
-          />
-          {validation.email.map((error, index) => (
-            <div key={index} className="text-danger">
-              {error}
-            </div>
-          ))}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={cred.password}
-            onChange={onchange}
-            name="password"
-            placeholder="Enter your password"
-          />
-          {validation.password.map((error, index) => (
-            <div key={index} className="text-danger">
-              {error}
-            </div>
-          ))}
-        </div>
-  
-        <div id="emailHelp" className="form-text text-center">
-          <button type="submit" className="btn btn-success">
-            Login
-          </button>
-          <p className="my-2">Don't have an account? Sign up here:</p>
-          <Link className="btn btn-success" to="/signup" role="button">
-            Signup
-          </Link>
-        </div>
-      </form>
     </div>
-  </div>
-  
+
   );
 };
 

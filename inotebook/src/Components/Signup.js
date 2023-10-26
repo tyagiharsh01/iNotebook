@@ -7,7 +7,7 @@ const Signup = (props) => {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
-// http://localhost:5000/api/auth/createUser
+
 
         try {
             if (cred.password !== cred.cpassword) {
@@ -15,7 +15,7 @@ const Signup = (props) => {
             }
             else {
                 console.log("enter in sign in api");
-                const response = await fetch("http://backend:5000/api/auth/createUser", {
+                const response = await fetch("http://localhost:5000/api/auth/createUser", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
